@@ -1,0 +1,228 @@
+body.modal-open{overflow:auto!important}
+#sideCart .alert-danger{
+      background-color: #f6e8e8;
+  border-color: #ec8787;
+  border: 1px solid #ec8787;
+  padding: .5rem 1rem;
+  border-radius: .5rem;
+  font-size: 10px;
+}
+
+#sideCart .group-list p{
+      font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin:0
+}
+#sideCart{
+position: fixed;
+top: 0;
+right: -400px;
+z-index: 999;
+height: 100dvh;
+background: #fff;
+width: 320px;
+box-shadow: 0px 0px 30px rgba(0, 0, 0, .2);
+display: flex;
+flex-direction: column;
+transition: right .3s;
+
+}
+.sideCart-open #sideCart{right: 0;}
+#sideCart .sideCart-header{
+border-bottom: 1px solid var(--border-color);
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#sideCart .sideCart-header span{
+color: var(--color-primary);
+font-weight: bold;
+}
+#sideCart .sideCart-header button{
+padding: 0;
+line-height: initial;
+border: 0;
+background: transparent;
+font-size: 0;
+}
+#sideCart .sideCart-header button i{
+font-size: 24px;
+color: var(--color-secondary);
+}
+
+#sideCart .sideCart-footer{}
+#sideCart .sideCart-footer .sideCart-actions{
+display: flex;
+flex-direction: column;
+gap: .5rem;
+padding: 1rem 1.5rem;
+}
+#sideCart .sideCart-footer .sideCart-actions .btn-checkout{
+  text-transform: initial;
+  color: #fff;
+  background: #009FB4;
+  text-align: center;
+  padding: 1rem;
+  font-weight: 600;
+  border-radius: .25rem !important;
+}
+#sideCart .sideCart-footer .sideCart-values{
+padding: 1rem 1.5rem;
+color: var(--color-primary);
+}
+#sideCart .sideCart-footer .sideCart-actions .btn-back{
+border: 0;
+font-size: calc(var(--tx-fs) * .8);
+padding: .5rem;
+color: var(--color-primary);
+}
+
+#sideCart .sideCart-content{
+height: 100%;
+overflow-x:hidden;
+overflow-y:scroll;
+}
+#sideCart .sideCart-content .empty{
+padding: 2rem;
+color: var(--color-primary);
+text-align: center;
+font-weight: bold;
+}
+
+#sideCart .sideCart-content .sideCart-item{
+margin-top: 1rem;
+padding-right: 1rem;
+}
+#sideCart .sideCart-content .sideCart-item .title{font-size: 14px;}
+#sideCart .sideCart-content .sideCart-item .sideCart-item-delete{
+font-size: 0;
+color: var(--color-primary);
+border: 0;
+padding: 0;
+background: transparent;
+}
+#sideCart .sideCart-content .sideCart-item .sideCart-item-delete i{
+font-size: 14px;
+}
+#sideCart .sideCart-content .sideCart-item .sideCart-item-quantity{
+border: solid 0.1rem #e1e1e1;
+width: fit-content;
+border-radius: .25rem!important;
+}
+#sideCart .sideCart-content .sideCart-item .sideCart-item-quantity button{
+border: 0;
+background: transparent;
+line-height: initial;
+font-size: 0;
+color: var(--color-secondary);
+width: 30px;
+height: 30px;
+}
+#sideCart .sideCart-content .sideCart-item .sideCart-item-quantity button i{
+font-size: 14px;
+}
+
+#sideCart .sideCart-content .sideCart-item .sideCart-item-quantity input::-webkit-outer-spin-button,
+#sideCart .sideCart-content .sideCart-item .sideCart-item-quantity input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+#sideCart .sideCart-content .sideCart-item .sideCart-item-quantity input[type=number] {
+  -moz-appearance:textfield; /* Firefox */
+}
+#sideCart .sideCart-content .sideCart-item .sideCart-item-quantity input{
+border: 0;
+text-align: center;
+width: 30px;
+}
+#sideCart .sideCart-content .sideCart-item strong{
+font-size: 12px;
+}
+
+#cart-redirect-modal{display:none!important}
+
+
+.lds-ellipsis,
+.lds-ellipsis div {
+box-sizing: border-box;
+}
+.lds-ellipsis {
+display: inline-block;
+position: relative;
+width: 80px;
+height: 80px;
+position: absolute;
+top: 50%;
+left: 50%;
+translate: -50% -50%;
+}
+.lds-ellipsis div {
+position: absolute;
+top: 33.33333px;
+width: 13.33333px;
+height: 13.33333px;
+border-radius: 50%;
+background: #fff;
+animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+left: 8px;
+animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+left: 8px;
+animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+left: 32px;
+animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+left: 56px;
+animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+0% {
+  transform: scale(0);
+}
+100% {
+  transform: scale(1);
+}
+}
+@keyframes lds-ellipsis3 {
+0% {
+  transform: scale(1);
+}
+100% {
+  transform: scale(0);
+}
+}
+@keyframes lds-ellipsis2 {
+0% {
+  transform: translate(0, 0);
+}
+100% {
+  transform: translate(24px, 0);
+}
+}
+#sideCart .loading{
+opacity: 0;
+pointer-events: none;
+display: none;
+position: absolute;
+top: 0;
+height: 100%;
+width: 100%;
+background: rgba(0, 0, 0, .3);
+z-index: 10;
+}
+.updatingSideCart #sideCart .loading{
+opacity: 1;
+pointer-events: all;
+display: block;
+}
