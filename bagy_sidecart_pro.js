@@ -180,7 +180,7 @@ sideCart.placeContent = function(){
     });
     $('#sideCart .sideCart-values').empty();
     
-    $(`<div class='row justify-content-between'><div class="col"><span>Subtotal</span></div><div class="text-right col"><s><small>${sideCart.cartInfo.subtotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</small></s><strong>${sideCart.findBestPaymentOptions(sideCart.cartInfo.payments)}<div></div></strong></div>`).appendTo('#sideCart .sideCart-values');
+    $(`<div class='row justify-content-between'><div class="col"><span>Subtotal</span></div><div class="text-right col"><small>${sideCart.cartInfo.subtotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</small><strong>${sideCart.findBestPaymentOptions(sideCart.cartInfo.payments)}<div></div></strong></div>`).appendTo('#sideCart .sideCart-values');
     sideCart.updateFooterActions();
   }
   
