@@ -7,7 +7,7 @@ body.modal-open{overflow:auto!important}
   border-radius: .5rem;
   font-size: 10px;
 }
-
+#sideCart .sideCart-item .name{font-size: calc(var(--tx-fs) * .8);}
 #sideCart .group-list p{
       font-size: 11px;
   text-overflow: ellipsis;
@@ -63,7 +63,7 @@ padding: 1rem 1.5rem;
 #sideCart .sideCart-footer .sideCart-actions .btn-checkout{
   text-transform: initial;
   color: #fff;
-  background: #009FB4;
+  background: var(--color-secondary);
   text-align: center;
   padding: 1rem;
   font-weight: 600;

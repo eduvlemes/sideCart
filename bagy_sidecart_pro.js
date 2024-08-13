@@ -1,4 +1,3 @@
-//alert(`foi`);
 var sideCart = {};
 sideCart.cartInfo = {isEmpty : true};
 sideCart.lang = {
@@ -6,7 +5,30 @@ sideCart.lang = {
   back: "Continuar Comprando",
   next: "Finalizar Compra",
   empty: "Ops... seu carrinho está vazio!"
-}
+};
+sideCart.findBestPaymentOptions = function(paymentOptions) {
+  let bestCashOption = {markup:99999};
+  let bestInstallmentOption = {parcels_no_interest : 0};
+  console.log(`aaa`,paymentOptions)
+  paymentOptions.forEach(option => {
+    console.log(option)
+      if ((option.method == "pix" || option.method == "billet") && option.markup < bestCashOption.markup) {
+          bestCashOption = option
+      }
+      if (option.method == "creditcard" && option.parcels_no_interest > bestInstallmentOption.parcels_no_interest) {
+        bestInstallmentOption = option
+      }
+  });
+  let html = "";
+  if(bestCashOption.installments.length > 0){
+    // html+= `<div class="d-flex align-items-center">${bestCashOption.installments[0].discount > 0 ? `<small class="mr-2">(-${bestCashOption.installments[0].discount.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})})</small>` : ''}${bestCashOption.installments[0].total.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</div>`
+    html+= `<div class="d-flex flex-column align-items-end justify-content-end mb-2">${bestCashOption.installments[0].total.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}<small class="d-block">à vista com ${Math.ceil(bestCashOption.installments[0].discount_percentage)}% OFF</small></div>`
+  }
+  if(bestInstallmentOption.installments.length > 0){
+    html+= `<div class="d-flex align-items-center justify-content-end"><small class="font-weight-bold">em até ${bestInstallmentOption.parcels_no_interest}x de ${bestInstallmentOption.installments[bestInstallmentOption.parcels_no_interest -1].parcel_price.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</small></div>`
+  }
+  return html;
+};
 sideCart.run = function(){
   
   $('body').on('click','ajax-nav-cart a, .cart-redirect-checkout', function(e){
@@ -153,10 +175,11 @@ sideCart.placeContent = function(){
     $(`<p class="empty">${sideCart.lang.empty}</p>`).appendTo('#sideCart .sideCart-content');
   }else{
      $.each(sideCart.cartInfo.items, function(k,i){
-      $(`<div class="row sideCart-item ml-0"><div class="col-3"><img class="img-responsive w-100" src=${i.image}></div><div class="col-9 title"><div class=row><div class=col>${i.name}</div><div class=col-auto><button class=sideCart-item-delete type=button data-id=${i.variation_id}><i class="h-sc-color material-icons md-36">delete</i></button></div></div>${i.variation ? ' <small class="d-block mt-3">'+i.variation+'</small>':''}<br>${i.discount>0 ? ' <span class="d-flex align-items-center font-weight-bold mb-2 text" style=--tx-fs:10px;color:var(--success)><i class="h-sc-color material-icons md-36 mr-1" style="font-size:var(--tx-fs)">check</i> Você ganhou '+i.discount.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})+' de desconto </span>':''}${sideCart.showGroupList(i)}<div class="row align-items-center"><div class=col><div class="d-flex sideCart-item-quantity"><button class=sideCart-item-remove type=button><i class="h-sc-color material-icons md-36">remove</i></button><input data-id=${i.variation_id} name=customCartQuantity type=number value=${i.quantity}><button class=sideCart-item-add type=button><i class="h-sc-color material-icons md-36">add</i></button></div></div><div class=col-auto><div class="align-items-center d-flex flex-column">${i.subtotal>i.total ? ' <s><small>'+ sideCart.itemPrice(i) +'</small></s>':''}<strong>${sideCart.itemSalePrice(i) }</strong></div></div></div></div></div><small class="d-flex mx-3 align-items-center mt-3"><input type="checkbox" value="true" ${i.gift_wrapping_accept && i.has_gift_wrapping ? 'checked':''} data-id="${i.variation_id}" class="mr-1" name="gift_wrapping_accept"/>Embalar para presente (+ ${(i.gift_wrapping_price * i.quantity).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})})</small><small class="d-flex align-items-center">${sideCart.showErrors(i)}</small><hr class=my-4>`).appendTo('#sideCart .sideCart-content');
+      $(`<div class="row sideCart-item ml-0"><div class="col-3"><img class="img-responsive w-100" src=${i.image}></div><div class="col-9 title"><div class=row><div class="col name">${i.name}</div><div class=col-auto><button class=sideCart-item-delete type=button data-id=${i.variation_id}><i class="h-sc-color material-icons md-36">delete</i></button></div></div>${i.variation ? ' <small class="d-block mt-3">'+i.variation+'</small>':''}<br>${i.discount>0 ? ' <span class="d-flex align-items-center font-weight-bold mb-2 text" style=--tx-fs:10px;color:var(--success)><i class="h-sc-color material-icons md-36 mr-1" style="font-size:var(--tx-fs)">check</i> Você ganhou '+i.discount.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})+' de desconto </span>':''}${sideCart.showGroupList(i)}<div class="row align-items-center"><div class=col><div class="d-flex sideCart-item-quantity"><button class=sideCart-item-remove type=button><i class="h-sc-color material-icons md-36">remove</i></button><input data-id=${i.variation_id} name=customCartQuantity type=number value=${i.quantity}><button class=sideCart-item-add type=button><i class="h-sc-color material-icons md-36">add</i></button></div></div><div class=col-auto><div class="align-items-center d-flex flex-column">${i.subtotal>i.total ? ' <s><small>'+ sideCart.itemPrice(i) +'</small></s>':''}<strong>${sideCart.itemSalePrice(i) }</strong></div></div></div></div></div><small class="d-flex mx-3 align-items-center mt-3"><input type="checkbox" value="true" ${i.gift_wrapping_accept && i.has_gift_wrapping ? 'checked':''} data-id="${i.variation_id}" class="mr-1" name="gift_wrapping_accept"/>Embalar para presente (+ ${(i.gift_wrapping_price * i.quantity).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})})</small><small class="d-flex align-items-center">${sideCart.showErrors(i)}</small><hr class=my-4>`).appendTo('#sideCart .sideCart-content');
     });
     $('#sideCart .sideCart-values').empty();
-    $(`<div class='row justify-content-between'><div class="col"><span>Subtotal</span></div><div class="text-right col"><strong>${sideCart.cartInfo.subtotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</strong></div>`).appendTo('#sideCart .sideCart-values');
+    
+    $(`<div class='row justify-content-between'><div class="col"><span>Subtotal</span></div><div class="text-right col"><s><small>${sideCart.cartInfo.subtotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</small></s><strong>${sideCart.findBestPaymentOptions(sideCart.cartInfo.payments)}<div></div></strong></div>`).appendTo('#sideCart .sideCart-values');
   }
   
   sideCart.updateFooterActions();
