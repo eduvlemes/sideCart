@@ -9,9 +9,9 @@ sideCart.lang = {
 sideCart.findBestPaymentOptions = function(paymentOptions) {
   let bestCashOption = {markup:99999};
   let bestInstallmentOption = {parcels_no_interest : 0};
-  console.log(`aaa`,paymentOptions)
+  //console.log(`aaa`,paymentOptions)
   paymentOptions.forEach(option => {
-    console.log(option)
+    //console.log(option)
       if ((option.method == "pix" || option.method == "billet") && option.markup < bestCashOption.markup) {
           bestCashOption = option
       }
@@ -109,7 +109,7 @@ sideCart.itemPrice = function(i){
 sideCart.itemSalePrice = function(i){
   let price = i.price;
   
-  console.log(price)
+  //console.log(price)
   if(i.discount){
     price = price - i.discount
   }
@@ -131,15 +131,15 @@ sideCart.showErrors = function(i, type){
     $.each(sideCart.cartInfo.errors, function(k,i){
       text += (text != "" ? '<br>' : '') + i;
     });  
-    console.log(text.length, sideCart.cartInfo)
+    //console.log(text.length, sideCart.cartInfo)
     if(text.length == 0 && sideCart.cartInfo.items){
       let hasErr = sideCart.cartInfo.items.filter(el => el.errors);
-      console.log(`xxx`,hasErr)
+      //console.log(`xxx`,hasErr)
       if(hasErr.length > 0){
         text += (text != "" ? '<br>' : '') + 'Revise seu carrinho! Alguma regra está impedindo a finalização da compra.';
       }
     }
-    console.log(`aa`, text.length)
+    //console.log(`aa`, text.length)
   }
 
   if(text != ""){
@@ -173,6 +173,7 @@ sideCart.placeContent = function(){
   $('#sideCart .sideCart-content').empty();
   if(sideCart.cartInfo.isEmpty){
     $(`<p class="empty">${sideCart.lang.empty}</p>`).appendTo('#sideCart .sideCart-content');
+    $('#sideCart .sideCart-values, #sideCart .sideCart-actions').empty();
   }else{
      $.each(sideCart.cartInfo.items, function(k,i){
       $(`<div class="row sideCart-item ml-0"><div class="col-3"><img class="img-responsive w-100" src=${i.image}></div><div class="col-9 title"><div class=row><div class="col name">${i.name}</div><div class=col-auto><button class=sideCart-item-delete type=button data-id=${i.variation_id}><i class="h-sc-color material-icons md-36">delete</i></button></div></div>${i.variation ? ' <small class="d-block mt-3">'+i.variation+'</small>':''}<br>${i.discount>0 ? ' <span class="d-flex align-items-center font-weight-bold mb-2 text" style=--tx-fs:10px;color:var(--success)><i class="h-sc-color material-icons md-36 mr-1" style="font-size:var(--tx-fs)">check</i> Você ganhou '+i.discount.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})+' de desconto </span>':''}${sideCart.showGroupList(i)}<div class="row align-items-center"><div class=col><div class="d-flex sideCart-item-quantity"><button class=sideCart-item-remove type=button><i class="h-sc-color material-icons md-36">remove</i></button><input data-id=${i.variation_id} name=customCartQuantity type=number value=${i.quantity}><button class=sideCart-item-add type=button><i class="h-sc-color material-icons md-36">add</i></button></div></div><div class=col-auto><div class="align-items-center d-flex flex-column">${i.subtotal>i.total ? ' <s><small>'+ sideCart.itemPrice(i) +'</small></s>':''}<strong>${sideCart.itemSalePrice(i) }</strong></div></div></div></div></div>${i.gift_wrapping_accept ? `<small class="d-flex mx-3 align-items-center mt-3"><input type="checkbox" value="true" ${i.gift_wrapping_accept && i.has_gift_wrapping ? 'checked':''} data-id="${i.variation_id}" class="mr-1" name="gift_wrapping_accept"/>Embalar para presente (+ ${(i.gift_wrapping_price * i.quantity).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})})</small>` : `` }<small class="d-flex align-items-center">${sideCart.showErrors(i)}</small><hr class=my-4>`).appendTo('#sideCart .sideCart-content');
@@ -180,6 +181,7 @@ sideCart.placeContent = function(){
     $('#sideCart .sideCart-values').empty();
     
     $(`<div class='row justify-content-between'><div class="col"><span>Subtotal</span></div><div class="text-right col"><s><small>${sideCart.cartInfo.subtotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</small></s><strong>${sideCart.findBestPaymentOptions(sideCart.cartInfo.payments)}<div></div></strong></div>`).appendTo('#sideCart .sideCart-values');
+    sideCart.updateFooterActions();
   }
   
   sideCart.updateFooterActions();
@@ -195,16 +197,16 @@ sideCart.placeContent = function(){
 //   //               if(item.quantity < productMinQuantity){
 //   //                   item.quantity = productMinQuantity;
 //   //                   flag=true;
-//   //                 console.log('set min');
+//   //                 //console.log('set min');
 //   //               }else{
 //   //                   var division = item.quantity/productMinQuantity;
 //   //                   var decimal = division % 1;
 //   //                   if(decimal > .5){
-//   //                     console.log('decimal up');
+//   //                     //console.log('decimal up');
 //   //                       division = Math.floor(division);
 //   //                       flag = true
 //   //                   }if(decimal > 0 && decimal < .5){
-//   //                     console.log('decimal down');
+//   //                     //console.log('decimal down');
 //   //                       division = Math.ceil(division);
 //   //                       flag = true
 //   //                   }
