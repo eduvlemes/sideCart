@@ -22,7 +22,7 @@ sideCart.findBestPaymentOptions = function(paymentOptions) {
   let html = "";
   if(bestCashOption.installments.length > 0){
     // html+= `<div class="d-flex align-items-center">${bestCashOption.installments[0].discount > 0 ? `<small class="mr-2">(-${bestCashOption.installments[0].discount.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})})</small>` : ''}${bestCashOption.installments[0].total.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</div>`
-    html+= `<div class="d-flex flex-column align-items-end justify-content-end mb-2">${bestCashOption.installments[0].total.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}<small class="d-block">à vista com ${Math.ceil(bestCashOption.installments[0].discount_percentage)}% OFF</small></div>`
+    html+= `<div class="d-flex flex-column align-items-end justify-content-end mb-2">${bestCashOption.installments[0].total.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} ${bestCashOption.installments[0].discount_percentage > 0 ? `<small class="d-block">à vista com ${Math.ceil(bestCashOption.installments[0].discount_percentage)}% OFF</small></div>` : ``}`
   }
   if(bestInstallmentOption.installments.length > 0){
     html+= `<div class="d-flex align-items-center justify-content-end"><small class="font-weight-bold">em até ${bestInstallmentOption.parcels_no_interest}x de ${bestInstallmentOption.installments[bestInstallmentOption.parcels_no_interest -1].parcel_price.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</small></div>`
