@@ -20,7 +20,7 @@ sideCart.findBestPaymentOptions = function(paymentOptions) {
       }
   });
   let html = "";
-  if(bestCashOption.installments.length > 0){
+  if(bestCashOption.installments && bestCashOption.installments.length > 0){
     // html+= `<div class="d-flex align-items-center">${bestCashOption.installments[0].discount > 0 ? `<small class="mr-2">(-${bestCashOption.installments[0].discount.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})})</small>` : ''}${bestCashOption.installments[0].total.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</div>`
     html+= `<div class="d-flex flex-column align-items-end justify-content-end mb-2">${bestCashOption.installments[0].total.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} ${bestCashOption.installments[0].discount_percentage > 0 ? `<small class="d-block">à vista com ${Math.ceil(bestCashOption.installments[0].discount_percentage)}% OFF</small></div>` : ``}`
   }
